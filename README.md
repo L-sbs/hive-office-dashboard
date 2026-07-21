@@ -2,9 +2,11 @@
 
 A one page morning brief that rebuilds itself every weekday at 7 AM Eastern and publishes to one fixed URL you can set as your browser homepage. It shows:
 
-1. Today's date and your batch-calendar mode (Money Open, Camera Day, Writing Day, People Day, Money Close)
-2. The single most time-sensitive item in your revenue pipeline
-3. Every open item waiting on your sign off, with due dates
+1. Today's date, your batch-calendar mode (Money Open, Camera Day, Writing Day, People Day, Money Close), and your 12-Week Year progress
+2. Today's one move: your morning check-in's biggest lever if it was updated today, otherwise the most time-sensitive item in your revenue pipeline, or your own override
+3. A pace gauge blending your weekly scoreboard with the live pipeline signal
+4. The approval batch queue: every open item waiting on your sign off, with due dates. Tap an item to strike it through; strikes are remembered on your device until the task actually closes in ClickUp, and tasks completed in ClickUp today show up already struck
+5. Energy check-in, mentor fuel quote, and a 12-Week Year lead-measure scoreboard (all saved privately in your browser, never published)
 
 No app, no server, no database. A small script runs on GitHub's computers each morning, asks ClickUp what's open, and rewrites one static web page.
 
