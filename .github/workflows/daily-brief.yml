@@ -1,0 +1,43 @@
+name: Daily brief
+
+on:
+  schedule:
+    # 11:00 UTC = 7:00 AM Eastern while daylight saving time is in effect.
+    # When clocks fall back (roughly November to March) this becomes 6:00 AM.
+    # See README for how to adjust.
+    - cron: "0 11 * * 1-5"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build the dashboard
+        env:
+          CLICKUP_API_TOKEN: ${{ secrets.CLICKUP_API_TOKEN }}
+          APPROVALS_LIST_IDS: ${{ secrets.APPROVALS_LIST_IDS }}
+          REVENUE_LIST_IDS: ${{ secrets.REVENUE_LIST_IDS }}
+        run: python scripts/build.py
+
+      - name: Commit and push if the page changed
+        run: |
+          git config user.name "hive-office-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/index.html
+          if git diff --cached --quiet; then
+            echo "No changes to publish."
+          else
+            git commit -m "Daily brief: $(date -u +%Y-%m-%d)"
+            git push
+          fi
